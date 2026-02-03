@@ -98,109 +98,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ===================================
-// Form Validation & Submission
-// ===================================
+// Contact form handling is now in pages/contact.html with email functionality
 
-const contactForm = document.getElementById('contact-form');
 
-if (contactForm) {
-    contactForm.addEventListener('submit', function (e) {
-        e.preventDefault();
 
-        // Reset previous errors
-        const errorElements = document.querySelectorAll('.form-group.error');
-        errorElements.forEach(el => el.classList.remove('error'));
 
-        let isValid = true;
-
-        // Validate Name
-        const nameInput = document.getElementById('name');
-        if (nameInput && nameInput.value.trim() === '') {
-            showError(nameInput, 'Please enter your name');
-            isValid = false;
-        }
-
-        // Validate Email
-        const emailInput = document.getElementById('email');
-        if (emailInput) {
-            const emailValue = emailInput.value.trim();
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-            if (emailValue === '') {
-                showError(emailInput, 'Please enter your email');
-                isValid = false;
-            } else if (!emailPattern.test(emailValue)) {
-                showError(emailInput, 'Please enter a valid email address');
-                isValid = false;
-            }
-        }
-
-        // Validate Service Selection
-        const serviceInput = document.getElementById('service');
-        if (serviceInput && serviceInput.value === '') {
-            showError(serviceInput, 'Please select a service');
-            isValid = false;
-        }
-
-        // Validate Message
-        const messageInput = document.getElementById('message');
-        if (messageInput && messageInput.value.trim() === '') {
-            showError(messageInput, 'Please enter a message');
-            isValid = false;
-        }
-
-        // If form is valid, show success message
-        if (isValid) {
-            showSuccessMessage();
-            contactForm.reset();
-        }
-    });
-}
-
-function showError(input, message) {
-    const formGroup = input.closest('.form-group');
-    formGroup.classList.add('error');
-
-    const errorElement = formGroup.querySelector('.form-error');
-    if (errorElement) {
-        errorElement.textContent = message;
-    }
-}
-
-function showSuccessMessage() {
-    // Create success message element
-    const successDiv = document.createElement('div');
-    successDiv.className = 'success-message';
-    successDiv.innerHTML = `
-        <div style="
-            background: linear-gradient(135deg, #48BB78, #38A169);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            margin-bottom: 2rem;
-            text-align: center;
-            box-shadow: 0 10px 15px -3px rgba(72, 187, 120, 0.3);
-            animation: fadeInUp 0.5s ease-out;
-        ">
-            <h3 style="margin: 0 0 0.5rem 0; color: white;">Thank You! 🎉</h3>
-            <p style="margin: 0; opacity: 0.95;">We've received your message and will get back to you within 24 hours.</p>
-        </div>
-    `;
-
-    // Insert before form
-    contactForm.parentNode.insertBefore(successDiv, contactForm);
-
-    // Scroll to success message
-    successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-    // Remove success message after 5 seconds
-    setTimeout(() => {
-        successDiv.style.transition = 'opacity 0.5s ease-out';
-        successDiv.style.opacity = '0';
-        setTimeout(() => successDiv.remove(), 500);
-    }, 5000);
-}
 
 // ===================================
 // Navbar Shadow on Scroll
